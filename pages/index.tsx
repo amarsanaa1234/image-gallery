@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { IMAGES_MANIFEST } from 'next/dist/shared/lib/constants';
 
 export async function getStaticProps() {
   const supabaseAdmin = createClient(
@@ -9,11 +8,7 @@ export async function getStaticProps() {
   process.env.SUPABASE_SERVICE_ROLE_KEY || ''
   )
 
-  const {data} = await supabaseAdmin.
-  from('images')
-  .select('*')
-  .order('id');
-
+  const {data} = await supabaseAdmin.from('images').select('*').order('id')
   return{
     props: {
       images: data,
@@ -29,7 +24,7 @@ function cn(...classes: string[]){
 type Image = {
   id: number
   href: string
-  imageSrc: String
+  imageSrc: string
   name: string
   username: string
 }
@@ -53,7 +48,7 @@ function BlurImage({image}: {image: Image}) {
       <div className="aspect-w-1 aspect-h-1 xl:aspect-w-7 xl:aspect-h-8 w-full overflow-hidden rounded-lg bg-gray-200">
         <Image
         alt=""
-        src={`image.imageSrc`}
+        src={image.imageSrc}
         layout="fill"
         objectFit="cover" 
         className={cn(
@@ -74,3 +69,4 @@ function BlurImage({image}: {image: Image}) {
     </a>
   )
 }
+
